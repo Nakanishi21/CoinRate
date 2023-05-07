@@ -1,7 +1,5 @@
 package com.example.coinrate
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -96,12 +94,13 @@ class MainViewModel @Inject constructor(
 
     private fun startSyncData() {
         compositeDisposable.clear()
-        val disposable = Observable.interval(1,300, TimeUnit.SECONDS)
+        if(selectedCompany.value!!.id.isBlank()) return
+        getCoinCharts()
+
+        val disposable = Observable.interval(300, TimeUnit.SECONDS)
             .subscribeBy(
                 onNext = {
-                    if(selectedCompany.value!!.id.isNotBlank()) {
-                        getCoinCharts()
-                    }
+                    if(selectedCompany.value!!.id.isNotBlank()) getCoinCharts()
                 },
                 onError = {}
             )
