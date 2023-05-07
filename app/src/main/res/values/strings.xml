@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CoinRate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="coin_company">coin_company</string>
+    <string name="one_day">1日</string>
+    <string name="one_week">１週間</string>
+    <string name="one_month">1か月</string>
+</resources>
