@@ -16,6 +16,7 @@ import kotlin.math.roundToInt
 class ItemAdapter(private val companies: List<CoinCompany>) : RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
     var viewData = companies
     lateinit var listener: OnItemClickListener
+    private var selectedPosition = -1
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val textView: TextView
@@ -57,11 +58,24 @@ class ItemAdapter(private val companies: List<CoinCompany>) : RecyclerView.Adapt
         Log.d("URL", item.image)
 
         viewHolder.itemView.setOnClickListener {
+            selectedPosition = viewHolder.bindingAdapterPosition
             listener.onItemClickListener(it, position, viewData[position])
         }
     }
 
     override fun getItemCount() = viewData.size
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.itemView.setBackgroundColor(Color.WHITE)
+    }
+
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if(selectedPosition == holder.bindingAdapterPosition){
+            holder.itemView.setBackgroundColor(Color.rgb(204,197,253))
+        }
+    }
 
     interface OnItemClickListener{
         fun onItemClickListener(view: View, position: Int, itemDetail: CoinCompany)
